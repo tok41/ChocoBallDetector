@@ -12,6 +12,7 @@ import os
 import glob
 import numpy as np
 from PIL import Image
+import random
 
 from chainercv.visualizations import vis_bbox
 from chainercv.links import FasterRCNNVGG16
@@ -50,17 +51,14 @@ def main():
     # ## 画像データのロード
     data_dir = os.path.join(HOME, 'data/res_images')
     img_files = glob.glob(os.path.join(data_dir, '*.JPG'))
-    print(len(img_files))
 
-    img_list = list()
-    for img_file in img_files:
-        img = Image.open(img_file)
-        img_arr = np.asarray(img).transpose(2, 0, 1).astype(
-            np.float32)  # Chainer入力用にarrayを変換
-        img_list.append(img_arr)
+    img_file = random.choice(img_files)
+    print('image_file : ', img_file)
+    img = Image.open(img_file)
+    img_arr = np.asarray(img).transpose(2, 0, 1).astype(np.float32)
 
     cd = ChocoballDetector()
-    res = cd.detectChocoball(img_list[0])
+    res = cd.detectChocoball(img_arr)
 
     bboxes = res['box']
     labels = res['objects']
@@ -69,10 +67,10 @@ def main():
 
     fig = plt.figure(figsize=(12, 4))
     ax = fig.subplots(1, 2)
-    vis_bbox(img_list[0], bboxes[0], labels[0], ax=ax[0])
-    vis_bbox(img_list[0], bboxes[0], labels[0],
+    vis_bbox(img_arr, bboxes[0], labels[0], ax=ax[0])
+    vis_bbox(img_arr, bboxes[0], labels[0],
              scores[0], label_names=classes, ax=ax[1])
-    plt.show()
+    plt.savefig('out/detected.png')
     print("detected choco-ball : ", np.sum(labels[0] == 0))
 
     return 0
