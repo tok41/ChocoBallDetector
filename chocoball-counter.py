@@ -104,8 +104,8 @@ def main():
 
     # res['img'].savefig('out/detected.png')
     print(type(res['img']))
-    img_pil = Image.open(BytesIO(res['img']))
-    img_pil.show()
+    # img_pil = Image.open(BytesIO(res['img']))
+    # img_pil.show()
 
     # fig = plt.figure(figsize=(12, 4))
     # img = Image.open(img_file)
