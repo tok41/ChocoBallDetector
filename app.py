@@ -1,6 +1,7 @@
 import os
 from flask import Flask, jsonify, request, render_template, send_file, abort
 from werkzeug.utils import secure_filename
+from functools import wraps
 
 from chocoball_counter import ChocoballDetector
 
@@ -21,7 +22,20 @@ def root():
     return render_template('index.html')
 
 
+def limit_content_length(max_length):
+    def decorator(f):
+        @wraps(f)
+        def wrapper(*args, **kwargs):
+            cl = request.content_length
+            if cl is not None and cl > max_length:
+                abort(413)
+            return f(*args, **kwargs)
+        return wrapper
+    return decorator
+
+
 @app.route('/chocoball', methods=['POST'])
+@limit_content_length(3 * 5000 * 4000)
 def chocoball():
     if 'file' not in request.files:
         abort('No file part')
@@ -35,6 +49,7 @@ def chocoball():
 
 
 @app.route('/chocoballimage', methods=['POST'])
+@limit_content_length(3 * 5000 * 4000)
 def get_choco_image():
     if 'file' not in request.files:
         abort('No file part')
