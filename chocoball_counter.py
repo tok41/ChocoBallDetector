@@ -68,8 +68,8 @@ class ChocoballDetector:
         Returns:
             dict{'img':image_binary, 'box':[[ymin,xmin,ymax,xmax]], 'objects':[object_id], 'scores':[score]}
         """
-        img_pil = Image.open(BytesIO(img))
-        # img_pil = Image.open(img)
+        #img_pil = Image.open(BytesIO(img))
+        img_pil = Image.open(img)
         img_arr = np.asarray(img_pil).transpose(2, 0, 1).astype(np.float32)
         bboxes, labels, scores = self.model_frcnn.predict([img_arr])
 

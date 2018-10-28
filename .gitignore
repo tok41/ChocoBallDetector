@@ -1,8 +1,13 @@
+.DS_Store
+
 *.pyc
+*.png
+*.jpeg
+*.jpg
+*.JPG
 .python-version
 
 model/
-data/
 out/
 tmp/
 

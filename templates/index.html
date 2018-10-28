@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ChocoballDetector</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css";; rel="stylesheet">
+    <style>
+      body{
+	  background-color:#c0c0c0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/">Home</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div class="row">
+	<div class="col-md-12">
+	  <h1><a href="/">Chocoball Detector</a></h1>
+	  <p>チョコボール個数の自動計測システム</p>
+	  
+	  <form method="post" action="/chocoballimage" enctype="multipart/form-data">
+	    <label class="input-group-btn">
+	      <span class="btn btn-primary">
+		Choose File
+		<input type="file" id="file" name="file">
+	      </span>
+	    </label>
+	    <input type="submit" value="Upload" class="btn btn-primary">
+	  </form>
+	  
+	  <p>
+	    {% if raw_img_file %}
+	    <img src="{{ raw_img_file }}">
+	    {% endif %}
+	    {% if out_img_file %}
+	    <img src="{{ out_img_file }}">
+	    {% endif %}
+	    {% if err_text %}
+	    {{err_text}}
+	    {% endif %}
+	  </p>
+	</div>
+      </div>
+
+      <div class="row">
+	<div class="col-md-12">
+	  <input type="text" name="result" size="100" value="予測チョコボール数 : {{detected_number}}" readonly>
+	</div>
+      </div>
+
+      <div class="row">
+	<div class="col-md-12">
+	  <hr>
+	  <form method="get" action="/send">
+	    <button type="submit" class="btn btn-primary" name="clear" value="Clear">Clear</button>
+	  </form>
+	</div>
+      </div>
+    </div>
+  </body>
+</html>
