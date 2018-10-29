@@ -75,6 +75,8 @@ class ChocoballDetector:
 
         fig = plt.figure(figsize=(5, 4))
         ax = fig.subplots(1, 1)
+        ax.tick_params(labelbottom="off", bottom="off")
+        ax.tick_params(labelleft="off", left="off")
         vis_bbox(img_arr, bboxes[0], labels[0], ax=ax)
         plt.savefig('tmp/tmp.png')
         with open('tmp/tmp.png', 'rb') as f:

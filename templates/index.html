@@ -6,11 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ChocoballDetector</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css";; rel="stylesheet">
-    <style>
-      body{
-	  background-color:#c0c0c0;
-      }
-    </style>
   </head>
 
   <body>
@@ -40,17 +35,28 @@
 	    <input type="submit" value="Upload" class="btn btn-primary">
 	  </form>
 	  
-	  <p>
-	    {% if raw_img_file %}
-	    <img src="{{ raw_img_file }}">
-	    {% endif %}
-	    {% if out_img_file %}
-	    <img src="{{ out_img_file }}">
-	    {% endif %}
-	    {% if err_text %}
-	    {{err_text}}
-	    {% endif %}
-	  </p>
+	  <table border="1" align="center" class="table table-striped">
+            <thead>
+              <tr>
+                <th>Base Image</th>
+                <th>Chocoball Detect Image</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="center">
+		  {% if raw_img_file %}
+		  <img src="{{ raw_img_file }}">
+		  {% endif %}
+		</td>
+                <td align="center">
+		  {% if out_img_file %}
+		  <img src="{{ out_img_file }}">
+		  {% endif %}
+		</td>
+            </tr>
+            </tbody>
+	  </table>
 	</div>
       </div>
 
