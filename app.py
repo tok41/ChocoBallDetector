@@ -34,25 +34,6 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/send", methods=['GET', 'POST'])
-def send_image():
-    if request.method == 'POST':
-        img_file = request.files['file']
-
-        # ファイルタイプチェック
-        if img_file and allowed_file(img_file.filename):
-            filename = secure_filename(img_file.filename)
-        else:
-            return render_template("index.html", err_text="ファイルタイプエラー")
-
-        # 画像ファイル保存
-        raw_img_uri = os.path.join(UPLOAD_FOLDER, filename)
-        img_file.save(raw_img_uri)
-        return render_template("index.html", raw_img_file=raw_img_uri)
-    else:
-        return redirect(url_for('index'))
-
-
 @app.route('/chocoballimage', methods=['POST'])
 def chocoball_image():
     # check input file
@@ -78,6 +59,25 @@ def chocoball_image():
                            filename.rsplit('.', 1)[0]+'.png')
     img_pil.save(img_uri)
     return render_template("index.html", raw_img_file=raw_img_uri, out_img_file=img_uri, detected_number=cnt)
+
+
+@app.route("/send", methods=['GET', 'POST'])
+def send_image():
+    if request.method == 'POST':
+        img_file = request.files['file']
+
+        # ファイルタイプチェック
+        if img_file and allowed_file(img_file.filename):
+            filename = secure_filename(img_file.filename)
+        else:
+            return render_template("index.html", err_text="ファイルタイプエラー")
+
+        # 画像ファイル保存
+        raw_img_uri = os.path.join(UPLOAD_FOLDER, filename)
+        img_file.save(raw_img_uri)
+        return render_template("index.html", raw_img_file=raw_img_uri)
+    else:
+        return redirect(url_for('index'))
 
 
 @app.route('/chocoball', methods=['POST'])

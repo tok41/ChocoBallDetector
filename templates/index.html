@@ -10,17 +10,17 @@
 
   <body>
     <header>
-      <nav class="navbar navbar-default">
+      <nav class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar navbar-inverse">
         <div class="container-fluid">
           <div class="navbar-header">
-            <a class="navbar-brand" href="/">Home</a>
+            <a class="navbar-brand" href="/">ChocoballDetector</a>
           </div>
         </div>
       </nav>
     </header>
 
-    <div class="container">
-      <div class="row">
+    <div class="container-fluid">
+      <div class="row flex-xl-nowrap">
 	<div class="col-md-12">
 	  <h1><a href="/">Chocoball Detector</a></h1>
 	  <p>チョコボール個数の自動計測システム</p>
@@ -32,9 +32,15 @@
 		<input type="file" id="file" name="file">
 	      </span>
 	    </label>
+	    <br>
 	    <input type="submit" value="Upload" class="btn btn-primary">
 	  </form>
-	  
+	  <br>
+	</div>
+      </div>
+
+      <div class="row flex-xl-nowrap">
+	<div class="col-md-12">
 	  <table border="1" align="center" class="table table-striped">
             <thead>
               <tr>
@@ -62,7 +68,7 @@
 
       <div class="row">
 	<div class="col-md-12">
-	  <input type="text" name="result" size="100" value="予測チョコボール数 : {{detected_number}}" readonly>
+	  <p class="text-xl-left">予測チョコボール数 : <font size="20">{{detected_number}}</font></p>
 	</div>
       </div>
 
