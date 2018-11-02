@@ -33,13 +33,51 @@
 	    <label class="input-group-btn">
 	      <span class="btn btn-primary">
 		Choose File
-		<input type="file" id="file" name="file">
+		<input type="file" id="file" name="file" disabled>
 	      </span>
 	    </label>
 	    <br>
-	    <input type="submit" value="Upload" class="btn btn-primary">
+	    <input type="submit" value="Upload" class="btn btn-primary" disabled>
 	  </form>
 	  <br>
+	</div>
+      </div>
+
+      <div class="row flex-xl-nowrap">
+	<div class="col-md-12">
+	  <table border="1" align="center" class="table table-striped">
+            <thead>
+              <tr>
+                <th>Base Image</th>
+                <th>Chocoball Detect Image</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="center">
+		  {% if raw_img_file %}
+		  <img src="{{ raw_img_file }}">
+		  {% endif %}
+		</td>
+                <td align="center">
+		  {% if out_img_file %}
+		  <img src="{{ out_img_file }}">
+		  {% endif %}
+		</td>
+            </tr>
+            </tbody>
+	  </table>
+	</div>
+      </div>
+
+      <div class="row">
+	<div class="col-md-12">
+	  {% if detected_number %}
+	  <p class="text-xl-left">予測チョコボール数 : <font size="20">{{detected_number}}</font></p>
+	  {% endif %}
+	  {% if err_text %}
+	  <p class="text-xl-left">{{err_text}}</p>
+	  {% endif %}
 	</div>
       </div>
 

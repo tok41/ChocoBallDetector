@@ -78,7 +78,7 @@ class ChocoballDetector:
         ax.tick_params(labelbottom="off", bottom="off")
         ax.tick_params(labelleft="off", left="off")
         vis_bbox(img_arr, bboxes[0], labels[0], ax=ax)
-        plt.savefig('tmp/tmp.png')
+        plt.savefig('tmp/tmp.png', bbox_inches="tight", pad_inches=0.0)
         with open('tmp/tmp.png', 'rb') as f:
             img_b = f.read()
         return {'img': img_b, 'box': bboxes[0], 'objects': labels[0], 'scores': scores[0]}
