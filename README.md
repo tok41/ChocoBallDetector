@@ -16,12 +16,14 @@ $ pip install -r requirements.txt
 ```
 $ mkdir model
 $ mkdir data
-$ mkdir data/res_images
+$ mkdir data/sample_image
+	# for keeping sample images
 $ mkdir tmp
 	# for keeping temporary image
 $ mkdir out
 	# output directory
 $ mkdir uploads
+	# for keeping updated image
 ```
 
 ### Model
@@ -32,9 +34,11 @@ $ mkdir uploads
 
 ## Testing
 - store image-data to "data/res_images"
+
 ```
 $ python chocoball_counter.py
 ```
+
 - output detected image to "out"
   - out/detected.png
 
