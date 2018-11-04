@@ -92,6 +92,11 @@ def chocoball_gallery():
     return render_template('choco_gallery.html', imgs=image_names)
 
 
+@app.route('/about', methods=['GET'])
+def about_page():
+    return render_template('about.html')
+
+
 @app.route("/send", methods=['GET', 'POST'])
 def send_image():
     if request.method == 'POST':
