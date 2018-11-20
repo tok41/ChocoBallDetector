@@ -99,7 +99,8 @@ def main():
     # クラスのインスタンス作成
     cd = ChocoballDetector()
     # チョコボールの計測
-    res = cd.detectChocoballImage(img_b)
+    #res = cd.detectChocoballImage(img_b)
+    res = cd.detectChocoballImage(img_file)
 
     # bboxes = res['box']
     labels = res['objects']
