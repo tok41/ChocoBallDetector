@@ -45,6 +45,33 @@
       </div>
 
       <div class="row flex-xl-nowrap">
+	<div class="col-md-12 col-xs-12">
+	  <div class="table-responsive">
+	  <table border="1" align="center" class="table table-hover">
+            <thead class="thread-dark">
+              <tr>
+                <th>Base Image</th>
+                <th>Chocoball Detect Image</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="center">
+		  {% if raw_img_file %}
+		  <img src="{{ raw_img_file }}" width="400">
+		  {% endif %}
+		</td>
+                <td align="center">
+		  {% if out_img_file %}
+		  <img src="{{ out_img_file }}" width="400">
+		  {% endif %}
+		</td>
+            </tr>
+            </tbody>
+	  </table>
+	  </div>
+	</div>
+	<!-- comment
 	<div class="col-md-12">
 	  <table border="1" align="center" class="table table-striped">
             <thead>
@@ -69,6 +96,7 @@
             </tbody>
 	  </table>
 	</div>
+	-->
       </div>
 
       <div class="row">
