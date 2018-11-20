@@ -25,6 +25,7 @@ from chainercv.links import FasterRCNNVGG16
 class ChocoballDetector:
     class_file = 'data/classes.txt'
     pretrain_model = 'model/snapshot_model.npz'
+    MAX_WIDTH = 500
 
     def __init__(self):
         self.getClasses()
@@ -70,6 +71,10 @@ class ChocoballDetector:
         """
         #img_pil = Image.open(BytesIO(img))
         img_pil = Image.open(img)
+        print(img_pil.size)
+        if img_pil.size[0] > self.MAX_WIDTH:
+            img_pil.thumbnail(size=(self.MAX_WIDTH, self.MAX_WIDTH))
+            print(img_pil.size)
         img_arr = np.asarray(img_pil).transpose(2, 0, 1).astype(np.float32)
         bboxes, labels, scores = self.model_frcnn.predict([img_arr])
 
