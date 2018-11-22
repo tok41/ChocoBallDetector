@@ -13,7 +13,10 @@ import numpy as np
 
 
 # ----------- Global Variables -----------------
-app = Flask(__name__)
+app = Flask(__name__,
+        static_url_path="",
+        static_folder= "./frontend/dist",
+        template_folder="./frontend/dist")
 
 UPLOAD_FOLDER = './uploads'
 OUTPUT_FOLDER = './out'
