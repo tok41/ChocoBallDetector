@@ -12,3 +12,5 @@ out/
 tmp/
 
 venv_choco/
+!frontend/src/assets/*.jpg
+!frontend/src/assets/*.png
