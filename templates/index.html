@@ -1,66 +1,32 @@
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ChocoballDetector</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";; rel="stylesheet">
-  </head>
+{% extends "layout.html" %}
+{% block title %}ChocoballDetector{% endblock %}
+{% block content %}
+<div class="row flex-xl-nowrap">
+  <div class="col-md-12">
+    <h1><a href="/">Chocoball Detector</a></h1>
+    <p>チョコボール個数の自動計測システム</p>
 
-  <body style="padding-top:70px;">
-    <header>
-      <nav class="navbar navbar-dark navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">ChocoballDetector</a>
-          </div>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="/">Home</a></li>
-              <li><a href="/gallery">Gallery</a></li>
-              <li><a href="/about">About</a></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
+    <form method="post" action="/chocoballimage" enctype="multipart/form-data">
+      <label class="input-group-btn">
+        <span class="btn btn-primary">
+          Choose File
+          <input type="file" id="file" name="file">
+        </span>
+      </label>
+      <br>
+      <input type="submit" value="Upload" class="btn btn-primary">
+    </form>
+    <br>
+  </div>
+</div>
 
-    <div class="container-fluid">
-      <div class="row flex-xl-nowrap">
-	<div class="col-md-12">
-	  <h1><a href="/">Chocoball Detector</a></h1>
-	  <p>チョコボール個数の自動計測システム</p>
-	  
-	  <form method="post" action="/chocoballimage" enctype="multipart/form-data">
-	    <label class="input-group-btn">
-	      <span class="btn btn-primary">
-		Choose File
-		<input type="file" id="file" name="file">
-	      </span>
-	    </label>
-	    <br>
-	    <input type="submit" value="Upload" class="btn btn-primary">
-	  </form>
-	  <br>
-	</div>
-      </div>
-
-      <div class="row">
-	<div class="col-md-12">
-	  <hr>
-	  <form method="get" action="/send">
-	    <button type="submit" class="btn btn-primary" name="clear" value="Back">Back</button>
-	  </form>
-	</div>
-      </div>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-  </body>
-</html>
+<div class="row">
+  <div class="col-md-12">
+    <hr>
+    <form method="get" action="/send">
+      <button type="submit" class="btn btn-primary" name="clear" value="Back">Back</button>
+    </form>
+  </div>
+</div>
+</div>
+{% endblock %}
