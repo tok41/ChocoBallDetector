@@ -1,4 +1,5 @@
 <template lang="pug">
+div
   b-container
     b-row.my-2
       b-col
@@ -38,14 +39,26 @@
     b-row.my-3
       b-col.text-center.my-auto
         span(v-if="detected") {{ countResult }} 個のチョコボールが検出されました。
+  .loading-overlay.bg-dark(v-if="detecting")
+    .loading-spinner
+      ring-loader.m-2(color="#C9CCD4" size=120)
+      p.m-2.text-white.text-center 検出中...
+  b-modal(title="検出結果" ref="modalResult" ok-only)
+    p {{ countResult }} 個のチョコボールが検出されました。
+    p 処理時間: {{ elapsedTime | msToSec }}
+
 
 
 </template>
 
 <script>
 import axios from 'axios'
+import { RingLoader } from '@saeris/vue-spinners'
 export default {
 name: 'home',
+  components: {
+    RingLoader
+  },
   data () {
     return {
       file: '',
@@ -54,7 +67,8 @@ name: 'home',
       imageResult: require('@/assets/question.png'),
       countResult: 0,
       detected: false,
-      detecting: false
+      detecting: false,
+      elapsedTime: 0.0
     }
 
   },
@@ -64,6 +78,7 @@ name: 'home',
       formData.append('file', this.file)
 
       this.detecting = true
+      let start = new Date().getTime()
       axios.post('/chocoball3',
         formData,
         {
@@ -80,6 +95,8 @@ name: 'home',
           console.log(result)
           this.detecting = false
           this.detected = true
+          this.elapsedTime = (new Date().getTime() - start)
+          this.$refs.modalResult.show()
         }).catch(() => {
           console.log('FAILURE!!')
           this.detecting = false
@@ -99,17 +116,21 @@ name: 'home',
       let file = e.target.files[0]
       let reader = new FileReader()
 
-      this.imgaeSelected = false
       reader.onload = (e) => {
         this.imgaeSelected = true
         this.imagePreview = e.target.result
       }
       if (file) {
+        this.imgaeSelected = false
+        this.imageResult = require('@/assets/question.png')
         if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
           reader.readAsDataURL(file)
         }
       }
     }
+  },
+  filters: {
+    msToSec: (ms) => (ms / 1000).toString() + "[sec]"
   }
 }
 </script>
@@ -125,5 +146,24 @@ name: 'home',
 }
 .before-after {
   width: 45%;
+}
+
+.loading-overlay {
+  position: absolute;
+  z-index: 100;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0.7;
+}
+
+.loading-spinner {
+  position: absolute;
+  z-index: 101;
+  top: 45%;
+  left: 45%;
 }
 </style>

@@ -11,6 +11,7 @@ Vue.config.productionTip = false
 Vue.component('page-header', PageHeader)
 Vue.component('page-footer', PageFooter)
 
+
 new Vue({
   router,
   render: h => h(App)
