@@ -10,6 +10,7 @@
   "dependencies": {
     "babel-merge": "^2.0.1",
     "bootstrap-vue": "^2.0.0-rc.11",
+    "file-reader": "^1.1.1",
     "pug": "^2.0.3",
     "pug-loader": "^2.4.0",
     "pug-plain-loader": "^1.0.0",
