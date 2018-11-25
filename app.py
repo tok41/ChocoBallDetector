@@ -10,6 +10,7 @@ from chocoball_counter import ChocoballDetector
 from io import BytesIO
 from PIL import Image
 import numpy as np
+import base64
 
 
 # ----------- Global Variables -----------------
@@ -147,6 +148,27 @@ def chocoball2():
     result = {'count': 3}
     return jsonify(result)
 
+@app.route('/chocoball3', methods=['POST'])
+def chocoball3():
+    # check input file
+    if 'file' not in request.files:
+        return render_template("view_result.html", err_text="No file part")
+    img_file = request.files['file']
+    if img_file and allowed_file(img_file.filename):
+        filename = secure_filename(img_file.filename)
+    else:
+        return render_template("view_result.html", err_text="ファイルタイプエラー")
+    if img_file.filename == '':
+        return render_template("view_result.html", err_text="No selected file")
+    # save input image
+    raw_img_uri = os.path.join(UPLOAD_FOLDER, filename)
+    img_file.save(raw_img_uri)
+    cd = ChocoballDetector()
+    res = cd.detectChocoballImage(img_file.stream)
+    cnt = float(np.sum(res['objects'] == 0))
+    rimg = 'data:image/gif;base64,' + base64.b64encode(res['img']).decode('utf-8')
+    result = { 'num': cnt, 'result_image': rimg }
+    return jsonify(result)
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
