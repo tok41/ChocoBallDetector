@@ -11,6 +11,7 @@ from io import BytesIO
 from PIL import Image
 import numpy as np
 import base64
+import json
 
 
 # ----------- Global Variables -----------------
@@ -148,6 +149,17 @@ def chocoball2():
     result = {'count': 3}
     return jsonify(result)
 
+class NumpyJsonEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        else:
+            return super(MyEncoder, self).default(obj)
+
 @app.route('/chocoball3', methods=['POST'])
 def chocoball3():
     # check input file
@@ -160,15 +172,24 @@ def chocoball3():
         return render_template("view_result.html", err_text="ファイルタイプエラー")
     if img_file.filename == '':
         return render_template("view_result.html", err_text="No selected file")
-    # save input image
-    raw_img_uri = os.path.join(UPLOAD_FOLDER, filename)
-    img_file.save(raw_img_uri)
     cd = ChocoballDetector()
     res = cd.detectChocoballImage(img_file.stream)
     cnt = float(np.sum(res['objects'] == 0))
-    rimg = 'data:image/gif;base64,' + base64.b64encode(res['img']).decode('utf-8')
-    result = { 'num': cnt, 'result_image': rimg }
-    return jsonify(result)
+    rimg = 'data:image/png;base64,' + base64.b64encode(res['img']).decode('utf-8')
+    result = {
+            'num': cnt,
+            'result_image': rimg,
+            'score': res['scores'],
+            'box': res['box']
+            }
+    # result2 = {
+    #         'num': cnt,
+    #         'score': res['scores'],
+    #         'box': res['box']
+    #         }
+    # print(json.dumps(result2, cls=NumpyJsonEncoder, indent=4))
+
+    return json.dumps(result, cls=NumpyJsonEncoder)
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
