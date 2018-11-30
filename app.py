@@ -16,9 +16,9 @@ import json
 
 # ----------- Global Variables -----------------
 app = Flask(__name__,
-        static_url_path="",
-        static_folder= "./frontend/dist",
-        template_folder="./frontend/dist")
+            static_url_path="",
+            static_folder="./frontend/dist",
+            template_folder="./frontend/dist")
 
 UPLOAD_FOLDER = './uploads'
 OUTPUT_FOLDER = './out'
@@ -28,6 +28,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
 app.config['GALLERY_FOLDER'] = GALLERY_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 3 * 5024 * 5024
+
+cd = ChocoballDetector()
 
 
 def allowed_file(filename):
@@ -59,7 +61,7 @@ def chocoball_image():
     raw_img_uri = os.path.join(UPLOAD_FOLDER, filename)
     img_file.save(raw_img_uri)
     # detect chocoball
-    cd = ChocoballDetector()
+    #cd = ChocoballDetector()
     res = cd.detectChocoballImage(img_file.stream)
     cnt = (np.sum(res['objects'] == 0))
     # save detected image
@@ -78,7 +80,7 @@ def chocoball_image_uri():
     # detect chocoball
     with open(raw_img_uri, 'rb') as f:
         img_b = f.read()
-    cd = ChocoballDetector()
+    #cd = ChocoballDetector()
     res = cd.detectChocoballImage(raw_img_uri)
     cnt = (np.sum(res['objects'] == 0))
     img_pil = Image.open(BytesIO(res['img']))
@@ -128,7 +130,7 @@ def chocoball():
     file = request.files['file']
     if file.filename == '':
         abort('No selected file')
-    cd = ChocoballDetector()
+    #cd = ChocoballDetector()
     res = cd.detectChocoballImage(file.stream)
     cnt = float(np.sum(res['objects'] == 0))
     return jsonify({'num_chocoball': cnt})
@@ -149,6 +151,7 @@ def chocoball2():
     result = {'count': 3}
     return jsonify(result)
 
+
 class NumpyJsonEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, np.integer):
@@ -159,6 +162,7 @@ class NumpyJsonEncoder(json.JSONEncoder):
             return obj.tolist()
         else:
             return super(MyEncoder, self).default(obj)
+
 
 @app.route('/chocoball3', methods=['POST'])
 def chocoball3():
@@ -172,24 +176,19 @@ def chocoball3():
         return render_template("view_result.html", err_text="ファイルタイプエラー")
     if img_file.filename == '':
         return render_template("view_result.html", err_text="No selected file")
-    cd = ChocoballDetector()
+    #cd = ChocoballDetector()
     res = cd.detectChocoballImage(img_file.stream)
     cnt = float(np.sum(res['objects'] == 0))
-    rimg = 'data:image/png;base64,' + base64.b64encode(res['img']).decode('utf-8')
+    rimg = 'data:image/png;base64,' + \
+        base64.b64encode(res['img']).decode('utf-8')
     result = {
-            'num': cnt,
-            'result_image': rimg,
-            'score': res['scores'],
-            'box': res['box']
-            }
-    # result2 = {
-    #         'num': cnt,
-    #         'score': res['scores'],
-    #         'box': res['box']
-    #         }
-    # print(json.dumps(result2, cls=NumpyJsonEncoder, indent=4))
-
+        'num': cnt,
+        'result_image': rimg,
+        'score': res['scores'],
+        'box': res['box']
+    }
     return json.dumps(result, cls=NumpyJsonEncoder)
+
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
@@ -208,4 +207,4 @@ def output_file(filename):
 
 # ---------------- MAIN ----------------------
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
+    app.run(debug=True, host='0.0.0.0', port=5000, threaded=False)
