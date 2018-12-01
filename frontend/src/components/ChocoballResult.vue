@@ -7,7 +7,7 @@ b-container.bg-gray
           image(:xlink:href="img_src" :width="orgWidth*imageScale" :height="orgHeight*imageScale" :key="img_src")
         rect(
           v-for="item in result"
-          v-if="orgImage != null"
+          v-if="orgImage != null && showResult"
           :key="img_src+item.id"
           :x="item.y*boxScale" :y="item.x*boxScale"
           :width="item.h*boxScale" :height="item.w*boxScale"
@@ -21,9 +21,9 @@ b-container.bg-gray
         tr
           th original resolution
           td ({{ orgWidth }}, {{orgHeight }})
-        tr(v-if="showResult")
+        tr
           th num of chocoballs
-          td {{ this.result.length - 1 /* ugh! */ }}
+          td {{ numChoco }}
 
     b-col
       transition(name="scoretable")
@@ -81,6 +81,13 @@ export default {
         return this.imageScale
       }
     },
+    numChoco: function() {
+      if (this.showResult) {
+        return this.numChocoBalls
+      } else {
+        return ''
+      }
+    }
   },
   methods: {
     rowEvent: function(item) {
@@ -113,11 +120,20 @@ export default {
       type: Boolean,
       default: true,
     },
-    img_src: String
+    img_src: String,
+    numChocoBalls: {
+      type: Number,
+      default: -1
+    }
   },
   watch: {
     img_src: function(newVal) {
       this.readImage(newVal)
+    },
+    showResult: function(newVal) {
+      if (newVal == false) {
+        this.currentRect = -1
+      }
     }
   },
   mounted() {

@@ -4,7 +4,7 @@ b-container.about
       h1 ギャラリー
   b-row.m-2
     b-col
-      chocoball-result(:img_src="targetImage" :result="resultToObj(targetResult)" :showResult="showResult" :filename="targetName")
+      chocoball-result(:img_src="targetImage" :result="resultToObj(targetResult)" :showResult="showResult" :filename="targetName" :numChocoBalls="resultCount")
   b-row.m-2
     b-container.p-4.bg-dark(fluid)
       b-row
@@ -121,6 +121,13 @@ export default {
       let idx = this.activeImageIndex
       if (idx >= 0) {
         return this.samples[idx].result
+      } else {
+        return null
+      }
+    },
+    resultCount: function() {
+      if (this.targetResult != null) {
+        return this.targetResult.box.length
       } else {
         return null
       }

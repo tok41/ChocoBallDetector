@@ -17,28 +17,9 @@ div
             @change="handleFileSelect")
         b-button.mx-1(@click="submitFile" variant="primary" :disabled="!imgaeSelected") 検出実行
         b-button.mx-1(@click="resetForm") リセット
-    b-row.my-3
-      b-col.text-center.my-auto
-        p 選択画像
-        b-img(
-          :src="imagePreview"
-          rounded
-          center
-          fluid
-          height="500px"
-          )
-      b-col.text-center.my-auto
-        p 検出結果
-        b-img(
-          :src="imageResult"
-          rounded
-          center
-          fluid
-          height="500px"
-          )
-    b-row.my-3
-      b-col.text-center.my-auto
-        span(v-if="detected") {{ countResult }} 個のチョコボールが検出されました。
+    b-row.my-2
+      b-col
+        chocoball-result(:img_src="imagePreview" :result="resultToObj(result)" :showResult="detected" :filename="fileName", :numChocoBalls="countResult")
   .loading-overlay.bg-dark(v-if="detecting")
     .loading-spinner
       ring-loader.m-2(color="#C9CCD4" size=120)
@@ -54,10 +35,12 @@ div
 <script>
 import axios from 'axios'
 import { RingLoader } from '@saeris/vue-spinners'
+import ChocoballResult from '../components/ChocoballResult'
 export default {
-name: 'home',
+  name: 'home',
   components: {
-    RingLoader
+    RingLoader,
+    ChocoballResult
   },
   data () {
     return {
@@ -66,11 +49,20 @@ name: 'home',
       imagePreview: require('@/assets/photo.png'),
       imageResult: require('@/assets/question.png'),
       countResult: 0,
+      result: null,
       detected: false,
       detecting: false,
       elapsedTime: 0.0
     }
 
+  },
+  computed: {
+    fileName: function () {
+      if (this.file != null) {
+        return this.file.name
+      }
+      else ''
+    }
   },
   methods: {
     submitFile () {
@@ -92,6 +84,7 @@ name: 'home',
           console.log('SUCCESS!!')
           this.imageResult = result.data.result_image
           this.countResult = result.data.num
+          this.result = result.data
           console.log(result)
           this.detecting = false
           this.detected = true
@@ -118,6 +111,7 @@ name: 'home',
 
       reader.onload = (e) => {
         this.imgaeSelected = true
+        this.detected = false
         this.imagePreview = e.target.result
       }
       if (file) {
@@ -127,7 +121,28 @@ name: 'home',
           reader.readAsDataURL(file)
         }
       }
-    }
+    },
+
+    resultToObj: function(result) {
+      let ret = []
+      if (result == null) {
+        return ret
+      }
+      result.box.forEach((b, idx) => {
+        let w = b[2] - b[0]
+        let h = b[3] - b[1]
+        let o = {
+          id: idx,
+          score: result.score[idx],
+          x: b[0],
+          y: b[1],
+          w: w,
+          h: h,
+        }
+        ret.push(o)
+      })
+      return ret
+    },
   },
   filters: {
     msToSec: (ms) => (ms / 1000).toString() + "[sec]"
