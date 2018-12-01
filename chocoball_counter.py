@@ -44,9 +44,6 @@ class ChocoballDetector:
     def setModel(self):
         self.model_frcnn = FasterRCNNVGG16(n_fg_class=len(self.classes),
                                            pretrained_model=self.pretrain_model)
-        self.gpu_id = 0
-        chainer.cuda.get_device_from_id(self.gpu_id).use()
-        self.model_frcnn.to_gpu()
         return 0
 
     def detectChocoball(self, img):
