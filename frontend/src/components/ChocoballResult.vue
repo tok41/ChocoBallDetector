@@ -71,15 +71,7 @@ export default {
       }
     },
     boxScale: function() {
-      if (this.orgWidth > this.maxImgRes) {
-        if (this.orgWidth > this.orgHeight) {
-          return this.drawWidth / this.maxImgRes
-        } else {
-          return this.maxImgRes / this.orgHeight
-        }
-      } else {
-        return this.imageScale
-      }
+	return this.imageScale
     },
     numChoco: function() {
       if (this.showResult) {
