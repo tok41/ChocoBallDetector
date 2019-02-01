@@ -13,8 +13,11 @@ import numpy as np
 import base64
 import json
 
+import requests
+
 
 # ----------- Global Variables -----------------
+# app = Flask(__name__)
 app = Flask(__name__,
             static_url_path="",
             static_folder="./frontend/dist",
@@ -188,6 +191,24 @@ def chocoball3():
         'box': res['box']
     }
     return json.dumps(result, cls=NumpyJsonEncoder)
+
+
+@app.route('/chocoballabeja', methods=['POST'])
+def chocoballabeja():
+    """
+    for debug
+    """
+    if 'file' not in request.files:
+        abort('No file part')
+    file = request.files['file']
+    if file.filename == '':
+        abort('No selected file')
+    api = 'https://user-1663601139210:ca7a38b5ab9f21f0593dc4ef5e0fce3dede4d955@glia-computing.api.abeja.io/deployments/1667339232000/services/ser-016f29666de3483e'
+    data = file
+    res = requests.post(url=api,
+                        data=data,
+                        headers={'Content-Type': 'image/jpeg'})
+    return json.dumps(res.json())
 
 
 @app.route('/uploads/<filename>')

@@ -71,7 +71,7 @@ export default {
 
       this.detecting = true
       let start = new Date().getTime()
-      axios.post('/chocoball3',
+      axios.post('/chocoballabeja',
         formData,
         {
           headers: {
