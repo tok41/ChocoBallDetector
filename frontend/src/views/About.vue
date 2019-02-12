@@ -14,7 +14,7 @@ b-container.about
   .space-row
   b-row.m-2
     b-col
-      h1 Why am I?
+      h1 Who am I?
   b-row.m-2
     b-col
       p Name: Tok41
