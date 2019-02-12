@@ -32,6 +32,11 @@ $ mkdir uploads
 ### classes file
 - data/classes.txt
 
+### Abeja Platform Account
+- abeja-id.json
+  - ABEJA-PLATFORM-USER
+  - PERSONAL-ACCESS-TOKEN
+
 ## Testing
 - store image-data to "data/res_images"
 

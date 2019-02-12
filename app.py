@@ -32,6 +32,11 @@ app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
 app.config['GALLERY_FOLDER'] = GALLERY_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 3 * 5024 * 5024
 
+with open('abeja-id.json') as f:
+    aid = json.load(f)
+    user_id = aid['ABEJA-PLATFORM-USER']
+    access_token = aid['PERSONAL-ACCESS-TOKEN']
+
 cd = ChocoballDetector()
 
 
@@ -203,7 +208,8 @@ def chocoballabeja():
     file = request.files['file']
     if file.filename == '':
         abort('No selected file')
-    api = 'https://user-1663601139210:ca7a38b5ab9f21f0593dc4ef5e0fce3dede4d955@glia-computing.api.abeja.io/deployments/1667339232000/services/ser-016f29666de3483e'
+    api = 'https://user-{}:{}@glia-computing.api.abeja.io/deployments/1667339232000/services/ser-016f29666de3483e'.format(
+        user_id, access_token)
     data = file
     res = requests.post(url=api,
                         data=data,
