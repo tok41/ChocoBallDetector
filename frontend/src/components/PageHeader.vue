@@ -2,7 +2,7 @@
   #header
     b-navbar(toggleable variant="dark" type="dark")
       b-navbar-brand(href="#")
-        b-img(src="@/assets/kyoro2.jpg" width="48px")
+        b-img(src="@/assets/kyoro.png" width="48px")
         span.mx-2 Chocoball Detector
       b-navbar-toggle(target="nav_collapse")
       b-collapse#nav_collapse(is-nav)

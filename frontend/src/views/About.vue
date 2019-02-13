@@ -9,8 +9,12 @@ b-container.about
         | このページはチョコボールの個数を自動で計測するサービスを提供します。
         | 以下のブログを参考にしてください。
       b-button(href="http://chocolate-ball.hatenablog.com/" variant="primary") チョコボール統計
+      p
+      p
+        | 画像処理APIは株式会社ABEJA様が提供するABEJA Platformで運用しています。
+      b-img(src="@/assets/abejaplatform_y_posi.png" fluid)
     b-col.m-2
-      b-img(src="@/assets/kyoro.png" fluid rounded="circle")
+      b-img(src="@/assets/kyoro_pic.png" fluid rounded="circle")
   .space-row
   b-row.m-2
     b-col
