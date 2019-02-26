@@ -14,13 +14,13 @@
 
 <script>
 export default {
-  name: 'page-header',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App',
-      value: 'default value'
+    name: 'page-header',
+    data () {
+	return {
+	    msg: 'Welcome to Your Vue.js App',
+	    value: 'default value'
+	}
     }
-  }
 }
 </script>
 
