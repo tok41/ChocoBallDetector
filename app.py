@@ -28,7 +28,7 @@ def chocoballabeja():
     file = request.files['file']
     if file.filename == '':
         abort('No selected file')
-    api = 'https://user-{}:{}@glia-computing.api.abeja.io/deployments/1667339232000'.format(
+    api = 'https://user-{}:{}@glia-computing.api.abeja.io/deployments/1733608937929'.format(
         user_id, access_token)
     data = file
     res = requests.post(url=api,
