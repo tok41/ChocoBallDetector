@@ -3,7 +3,7 @@ chainer==5.0.0
 chainercv==0.10.0
 Flask==1.0.2
 jedi==0.13.1
-Jinja2==2.10
+Jinja2 ~> 2.10.1
 jsonschema==2.6.0
 matplotlib==3.0.0
 numpy==1.15.2
